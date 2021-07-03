@@ -1,0 +1,26 @@
+# -*- coding:utf-8 -*-
+from image_sdk.utils import encode_to_base64
+from image_sdk.recapture_detect import recapture_detect_aksk
+from image_sdk.utils import init_global_env
+
+if __name__ == '__main__':
+    # Services currently support North China-Beijing(cn-north-4), Asia Pacific-Hong Kong(ap-southeast-1)
+    init_global_env('cn-north-4')
+
+    #
+    # access image recapture detect ,post data by aksk
+    #
+    app_key = '*************'
+    app_secret = '************'
+
+    # The OBS link should match the region, and the OBS resources of different regions are not shared
+    demo_data_url = 'https://sdk-obs-source-save.obs.cn-north-4.myhuaweicloud.com/recapture-detect.jpg'
+
+    # call interface use the file
+    result = recapture_detect_aksk(app_key, app_secret, encode_to_base64('data/recapture-detect-demo.jpg'),
+                                   '', 0.75, ["recapture"])
+    print(result)
+
+    # call interface use the url (token, image, url, threshold=0.95, scene=None)
+    result = recapture_detect_aksk(app_key, app_secret, '', demo_data_url, 0.75, ["recapture"])
+    print(result)
